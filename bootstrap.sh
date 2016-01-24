@@ -14,8 +14,14 @@ function die_with {
     exit 1
 };
 
+grep 'jessie main contrib non-free' /etc/apt/sources.list \
+    || echo deb http://ftp.debian.org/debian/ jessie main contrib non-free >> /etc/apt/sources.list
+grep 'jessie/updates main contrib non-free' /etc/apt/sources.list \
+    || echo deb http://security.debian.org/ jessie/updates main contrib non-free >> /etc/apt/sources.list
+apt-get update && apt-get upgrade
 apt-get install -y -f
 apt-get install -y tree git-core vim irssi screen python-pip tmux
+apt-get install -y xorg iceweasel
 
 cp -nr $SRCDIR/home/user/.ssh/id_rsa /home/$USER/.ssh || die_with "$LASTCMD"
 cp -nr $SRCDIR/home/user/.ssh/id_rsa.pub /home/$USER/.ssh || die_with "$LASTCMD"
@@ -25,6 +31,5 @@ chmod 644 /home/$USER/.ssh/id_rsa.pub
 rm -f /home/$USER/.ssh/config
 sudo -u $USER ln -s $SRCDIR/home/user/.ssh/config /home/$USER/.ssh 2>&1
 echo "Auth keys updated succesfully"
-
 
 echo PROVISION FINISHED
