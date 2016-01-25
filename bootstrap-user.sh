@@ -21,3 +21,10 @@ if [ ! -x /home/$USER/src/desktop-conf/vendors/fluxbox/fluxbox ]; then
     (cd /home/$USER/src/desktop-conf/vendors/fluxbox && ./autogen.sh && ./configure && make) || die_with "$LASTCMD"
 fi
 cp /home/$USER/src/desktop-conf/vendors/fluxbox/fluxbox /home/$USER/bin/fluxbox
+
+(cd /home/$USER/src/desktop-conf/vendors/powerline-fonts && sh install.sh) || die_with "$LASTCMD"
+if [ ! -x /home/$USER/src/desktop-conf/vendors/st/st ]; then
+    (cd /home/$USER/src/desktop-conf/vendors/st &&  make) || die_with "$LASTCMD"
+fi
+cp /home/$USER/src/desktop-conf/vendors/st/st /home/$USER/bin/st
+
