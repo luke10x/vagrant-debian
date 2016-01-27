@@ -1,28 +1,29 @@
 #!/bin/bash
-echo PROVISION STARTING
+export SRCDIR="$(readlink -m "$( dirname "${BASH_SOURCE[0]}" )" )"
+source $SRCDIR/bootstrap-common.sh
 
-SRCDIR="$(readlink -m "$( dirname "${BASH_SOURCE[0]}" )" )"
 USER=vagrant
 GROUP=vagrant
 
-echo " srcdir=$SRCDIR ; user=$USER ; group=$GROUP"
+if grep 'jessie main contrib' /etc/apt/sources.list > /dev/null ; then
+    echo "apt updates are skipped" 1>&2
+else
+    echo deb http://ftp.debian.org/debian/ jessie main contrib non-free >> /etc/apt/sources.list
+    echo deb http://security.debian.org/ jessie/updates main contrib non-free >> /etc/apt/sources.list
+    apt-get update -y && apt-get upgrade -y
+    apt-get install -y -f
+fi
 
-trap 'LASTCMD=$this_command; this_command=$BASH_COMMAND' DEBUG
-
-function die_with {
-    echo "PROVISION FAILED RUNNING: $1" >&2
-    exit 1
-};
-
-grep 'jessie main contrib non-free' /etc/apt/sources.list \
-    || echo deb http://ftp.debian.org/debian/ jessie main contrib non-free >> /etc/apt/sources.list
-grep 'jessie/updates main contrib non-free' /etc/apt/sources.list \
-    || echo deb http://security.debian.org/ jessie/updates main contrib non-free >> /etc/apt/sources.list
-apt-get update && apt-get upgrade
-apt-get install -y -f
-apt-get install -y tree git-core vim irssi screen python-pip tmux
-apt-get install -y xorg iceweasel
+apt-get install -y tree
+apt-get install -y git-core
+apt-get install -y vim
+apt-get install -y irssi
+apt-get install -y screen
+apt-get install -y python-pip
+apt-get install -y tmux
+apt-get install -y xorg iceweasel xcompmgr feh
 apt-get install -y xorg-dev
+apt-get install -y libfribidi0 menu xfonts-terminus
 apt-get install -y build-essential automake libtool autoconf pkg-config gettext
 
 apt-get install -y module-assistant
@@ -38,6 +39,4 @@ rm -f /home/$USER/.ssh/config
 sudo -u $USER ln -s $SRCDIR/home/user/.ssh/config /home/$USER/.ssh 2>&1
 echo "Auth keys updated succesfully"
 
-sudo -u $USER sh $SRCDIR/bootstrap-user.sh
-
-echo PROVISION FINISHED
+sudo -u $USER bash $SRCDIR/bootstrap-user.sh
