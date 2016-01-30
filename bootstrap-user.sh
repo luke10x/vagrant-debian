@@ -4,6 +4,10 @@ source $SRCDIR/bootstrap-common.sh
 
 mkdir -p /home/$USER/src
 
+if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
+    ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null;
+fi
+
 if [ ! -d /home/$USER/src/dotfiles ]; then
     git clone git@github.com:lukoko/dotfiles.git /home/$USER/src/dotfiles || die_with "$LASTCMD"
     (cd /home/$USER/src/dotfiles && bash install.sh) || die_with "$LASTCMD"
