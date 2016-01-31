@@ -25,10 +25,9 @@ apt-get install -y xorg iceweasel xcompmgr feh
 apt-get install -y xorg-dev
 apt-get install -y libfribidi0 menu xfonts-terminus
 apt-get install -y build-essential automake libtool autoconf pkg-config gettext
-
-apt-get install -y module-assistant
-m-a prepare
+apt-get install -y module-assistant linux-headers-$(uname -r) dkms
 apt-get install -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
+m-a prepare
 
 cp -nr $SRCDIR/home/user/.ssh/id_rsa /home/$USER/.ssh || die_with "$LASTCMD"
 cp -nr $SRCDIR/home/user/.ssh/id_rsa.pub /home/$USER/.ssh || die_with "$LASTCMD"
