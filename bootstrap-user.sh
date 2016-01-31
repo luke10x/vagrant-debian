@@ -31,9 +31,11 @@ cp /home/$USER/src/desktop-conf/vendors/fluxbox/fbrun /home/$USER/bin/fbrun
 cp /home/$USER/src/desktop-conf/vendors/fluxbox/fbsetroot /home/$USER/bin/fbsetroot
 cp /home/$USER/src/desktop-conf/vendors/fluxbox/fluxbox-update_configs /home/$USER/bin/fluxbox-update_configs
 
-(cd /home/$USER/src/desktop-conf/vendors/powerline-fonts && sh install.sh) || die_with "$LASTCMD"
+(cd /home/$USER/src/desktop-conf/vendors/powerline-fonts && bash install.sh) || die_with "$LASTCMD"
+
 if [ ! -x /home/$USER/src/desktop-conf/vendors/st/st ]; then
     (cd /home/$USER/src/desktop-conf/vendors/st &&  make) || die_with "$LASTCMD"
 fi
 cp /home/$USER/src/desktop-conf/vendors/st/st /home/$USER/bin/st
 
+echo "User $USER updated."
