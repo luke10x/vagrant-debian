@@ -18,7 +18,6 @@ apt-get install -y tree
 apt-get install -y git-core
 apt-get install -y vim
 apt-get install -y irssi
-apt-get install -y screen
 apt-get install -y python-pip
 apt-get install -y tmux
 apt-get install -y xorg iceweasel xcompmgr feh
@@ -28,6 +27,13 @@ apt-get install -y build-essential automake libtool autoconf pkg-config gettext
 apt-get install -y module-assistant linux-headers-$(uname -r) dkms
 apt-get install -y virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 m-a prepare
+
+# More software
+apt-get install -y thunar silversearcher-ag lxappearance screenfetch mousepad nethogs vlc youtube-dl
+apt-get install -y tango-icon-theme
+apt-get install -y human-icon-theme
+apt-get install -y eom atril
+apt-get install -y gimp inkscape
 
 cp -nr $SRCDIR/home/user/.ssh/id_rsa /home/$USER/.ssh || die_with "$LASTCMD"
 cp -nr $SRCDIR/home/user/.ssh/id_rsa.pub /home/$USER/.ssh || die_with "$LASTCMD"
